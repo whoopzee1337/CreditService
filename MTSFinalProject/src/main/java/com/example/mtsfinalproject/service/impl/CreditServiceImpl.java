@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * Сервис для работы с заявками на кредит
+ */
 @Service
 @RequiredArgsConstructor
 public class CreditServiceImpl implements CreditService {
@@ -35,24 +38,41 @@ public class CreditServiceImpl implements CreditService {
     private final TariffMapper tariffMapper;
     private final LoanOrderMapper loanOrderMapper;
 
+    /**
+     * Метод для получения тарифов на кредит
+     *
+     * @return Список тарифов в виде объектов TariffDto
+     */
     @Override
     public List<TariffDto> getTariffs() {
         List<TariffDto> tariffDtos = new ArrayList<>();
-        for (TariffEntity tariff : tariffRepository.findAll()){
+        for (TariffEntity tariff : tariffRepository.findAll()) {
             tariffDtos.add(tariffMapper.toDto(tariff));
         }
         return tariffDtos;
     }
 
+    /**
+     * Метод для получения заявок пользователя
+     *
+     * @param userId Идентификатор пользователя
+     * @return Список заявок пользователя в виде объектов LoanOrderDto
+     */
     @Override
-    public List<LoanOrderDto> getUserOrders(Long userId){
+    public List<LoanOrderDto> getUserOrders(Long userId) {
         List<LoanOrderDto> loanOrderDtos = new ArrayList<>();
-        for (LoanOrderEntity loanOrder : loanOrderRepository.findAll(userId)){
+        for (LoanOrderEntity loanOrder : loanOrderRepository.findAll(userId)) {
             loanOrderDtos.add(loanOrderMapper.toDto(loanOrder));
         }
         return loanOrderDtos;
     }
 
+    /**
+     * Метод для создания новой заявки на кредит
+     *
+     * @param dto Информация о создаваемой заявке
+     * @return Созданная заявка в виде объекта LoanOrderDto
+     */
     @Override
     public LoanOrderDto createOrder(LoanOrderCreateDto dto) {
         if (!tariffRepository.isExist(dto.getTariffId())) {
@@ -96,6 +116,12 @@ public class CreditServiceImpl implements CreditService {
         return loanOrderMapper.toDto(loanOrderEntity);
     }
 
+    /**
+     * Метод для получения статуса заявки
+     *
+     * @param orderId Идентификатор заявки
+     * @return Информация о статусе заявки в виде объекта LoanOrderDto
+     */
     @Override
     public LoanOrderDto getStatusOrder(UUID orderId) {
         if (!loanOrderRepository.isExist(orderId)) {
@@ -104,6 +130,11 @@ public class CreditServiceImpl implements CreditService {
         return loanOrderMapper.toDto(loanOrderRepository.getOrder(orderId));
     }
 
+    /**
+     * Метод для удаления заявки на кредит
+     *
+     * @param dto Информация о заявке, которую необходимо удалить
+     */
     @Override
     public void deleteOrder(LoanOrderDeleteDto dto) {
         if (!loanOrderRepository.isExist(dto.getUserId(), dto.getOrderId())) {
