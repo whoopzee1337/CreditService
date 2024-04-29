@@ -1,0 +1,40 @@
+server:
+  port: 0
+
+spring:
+  liquibase:
+    enabled: true
+  application:
+    name: loan-service
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5332/postgres
+    username: Alexander
+    password: 123
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+
+resilience4j:
+  timelimiter:
+    instances:
+      oneSecTimeLimiter:
+        timeout-duration: 1s
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+
