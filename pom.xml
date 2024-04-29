@@ -9,11 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>MTSFinalProject</module>
-        <module>MTSFinalProjectApiGateway</module>
-        <module>MTSFinalProjectEurekaServer</module>
-        <module>MTSFinalProjectSecurity</module>
-        <module>MTSFinalProjectApiGateway</module>
+        <module>CreditService</module>
+        <module>CreditServiceApiGateway</module>
+        <module>CreditServiceEurekaServer</module>
+        <module>CreditServiceSecurity</module>
+        <module>CreditServiceApiGateway</module>
     </modules>
 
     <properties>
